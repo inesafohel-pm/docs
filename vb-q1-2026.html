@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitality Blueprint — Q1 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0f0f1a;
+    color: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    user-select: none;
+  }
+
+  /* ── Slide container ── */
+  .deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    overflow: hidden;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ── LABS watermark ── */
+  .slide::before {
+    content: 'LABS';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28vw;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.03);
+    letter-spacing: 0.05em;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .slide > * { position: relative; z-index: 1; }
+
+  /* ── Typography ── */
+  .slide-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .slide-subtitle {
+    font-size: 1.3rem;
+    color: #a78bfa;
+    font-weight: 600;
+    margin-bottom: 48px;
+  }
+  .year-badge {
+    position: absolute;
+    top: 28px;
+    right: 40px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #a78bfa;
+    z-index: 2;
+  }
+
+  /* ── Cards grid ── */
+  .cards { display: flex; gap: 24px; flex-wrap: wrap; }
+  .card {
+    flex: 1 1 280px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.3s;
+  }
+  .card:hover { border-color: rgba(167, 139, 250, 0.3); }
+
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(167, 139, 250, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+  }
+  .card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .card p {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.55;
+  }
+
+  /* ── Title slide (centered) ── */
+  .slide-hero {
+    align-items: center;
+    text-align: center;
+  }
+  .slide-hero .logo {
+    width: 72px; height: 72px;
+    border-radius: 18px;
+    background: rgba(167, 139, 250, 0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 28px;
+  }
+  .slide-hero .slide-title { font-size: 3.8rem; margin-bottom: 12px; }
+  .slide-hero .slide-subtitle { margin-bottom: 0; font-size: 1.5rem; color: rgba(255,255,255,0.55); }
+  .slide-hero .year { color: #a78bfa; font-size: 1.3rem; font-weight: 600; margin-top: 4px; }
+
+  /* ── Numbered list style (slide 4) ── */
+  .numbered-list { display: flex; flex-direction: column; gap: 24px; max-width: 900px; }
+  .numbered-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 28px 32px;
+  }
+  .numbered-item .num {
+    width: 44px; height: 44px; min-width: 44px;
+    border-radius: 12px;
+    background: rgba(167, 139, 250, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #a78bfa;
+  }
+  .numbered-item h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+  .numbered-item p { font-size: 0.92rem; color: rgba(255,255,255,0.55); line-height: 1.55; }
+
+  /* ── Goal slide (centered) ── */
+  .goal-slide {
+    align-items: center;
+    text-align: center;
+  }
+  .goal-slide .goal-icon {
+    width: 80px; height: 80px;
+    border-radius: 20px;
+    background: rgba(167, 139, 250, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem;
+    margin-bottom: 32px;
+  }
+  .goal-slide .slide-title { font-size: 3rem; margin-bottom: 16px; }
+  .goal-slide .goal-desc {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.5);
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  /* ── Risks slide ── */
+  .risks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 8px;
+  }
+  .risk-col h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 16px;
+  }
+  .risk-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+  }
+  .risk-card h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .risk-card .meta {
+    font-size: 0.82rem;
+    margin-bottom: 6px;
+  }
+  .risk-card .meta .prob { color: #facc15; }
+  .risk-card .meta .impact { color: #f87171; }
+  .risk-card .mitigation {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+  .badge-happened { background: rgba(239, 68, 68, 0.18); color: #f87171; }
+  .badge-mitigated { background: rgba(34, 197, 94, 0.18); color: #4ade80; }
+
+  .risk-card.future-risk {
+    border-color: rgba(250, 204, 21, 0.2);
+  }
+
+  /* ── Navigation ── */
+  .nav {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 100;
+  }
+  .nav-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .nav-btn:hover { border-color: #a78bfa; background: rgba(167,139,250,0.1); }
+
+  .dots { display: flex; gap: 8px; align-items: center; }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .dot.active {
+    width: 28px;
+    background: #a78bfa;
+  }
+
+  .slide-counter {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    z-index: 100;
+  }
+
+  .fullscreen-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s;
+  }
+  .fullscreen-btn:hover { border-color: #a78bfa; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .slide { padding: 40px 32px; }
+    .slide-title { font-size: 2.2rem; }
+    .risks-grid { grid-template-columns: 1fr; }
+    .cards { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ═══ SLIDE 1 — Title ═══ -->
+  <div class="slide slide-hero active" data-slide="0">
+    <div class="logo">&#128640;</div>
+    <div class="slide-title">VITALITY BLUEPRINT</div>
+    <div class="slide-subtitle">Quarterly Project Review — Q1</div>
+    <div class="year">2026</div>
+  </div>
+
+  <!-- ═══ SLIDE 2 — Q1 Highlights ═══ -->
+  <div class="slide" data-slide="1">
+    <span class="year-badge">2026</span>
+    <div class="slide-title">Q1 Highlights</div>
+    <div class="slide-subtitle" style="margin-bottom:40px;"></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">&#128101;</div>
+        <h3>Significant Team Changes</h3>
+        <p>New strategic course of action led to significant changes in team composition and project direction.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128736;</div>
+        <h3>New Features & Platform v3.0</h3>
+        <p>Launched Super Admin and Wearables features. Kicked off development of the new platform version.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129302;</div>
+        <h3>AI Everywhere</h3>
+        <p>Broad adoption of AI across development, QA, design, and project management workflows.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 3 — New Features ═══ -->
+  <div class="slide" data-slide="2">
+    <span class="year-badge">2026</span>
+    <div class="slide-title">New Features & Improvements</div>
+    <div class="slide-subtitle" style="margin-bottom:40px;"></div>
+    <div class="cards">
+      <div class="card" style="flex:1 1 45%;">
+        <div class="card-icon">&#128272;</div>
+        <h3>Super Admin</h3>
+        <p></p>
+      </div>
+      <div class="card" style="flex:1 1 45%;">
+        <div class="card-icon">&#9201;</div>
+        <h3>Wearables Integration</h3>
+        <p>Connected wearable devices to the platform, enabling health data syncing and expanded biomarker tracking.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 4 — v3.0 & New Course of Action ═══ -->
+  <div class="slide" data-slide="3">
+    <span class="year-badge">2026</span>
+    <div class="slide-title">3.0 and... New Course of Action</div>
+    <div class="slide-subtitle" style="margin-bottom:36px;"></div>
+    <div class="numbered-list">
+      <div class="numbered-item">
+        <div class="num">1</div>
+        <div>
+          <h3>AI Adoption Across All Functions</h3>
+          <p>Wide-scale use of AI in development, QA, design, and management — increasing velocity and reducing manual overhead across the board.</p>
+        </div>
+      </div>
+      <div class="numbered-item">
+        <div class="num">2</div>
+        <div>
+          <h3>International Team Expansion</h3>
+          <p>Added a new full-stack developer based in the US with extensive Claude AI expertise — sharing knowledge and best practices with the team.</p>
+        </div>
+      </div>
+      <div class="numbered-item">
+        <div class="num">3</div>
+        <div>
+          <h3>Gradual Team Reduction</h3>
+          <p>QA, 1 BE, 2 FE, and PM moved off the project. VB is shifting focus to marketing and increasing sales before scaling the team back up with new features.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 5 — Q2 Goal ═══ -->
+  <div class="slide goal-slide" data-slide="4">
+    <span class="year-badge">2026</span>
+    <div class="goal-icon">&#127919;</div>
+    <div class="slide-title">Q2 Goal</div>
+    <div class="slide-subtitle" style="font-size:1.8rem; color: #a78bfa; margin-bottom: 20px;">Increase Sales & Revenue</div>
+    <div class="goal-desc">Focus shifts from feature development to growth — marketing push, sales enablement, and platform stability to support customer acquisition.</div>
+  </div>
+
+  <!-- ═══ SLIDE 6 — Risks ═══ -->
+  <div class="slide" data-slide="5">
+
+    <span class="year-badge">2026</span>
+    <div class="slide-title" style="font-size:2.6rem;">Project Risks</div>
+    <div class="slide-subtitle" style="margin-bottom: 24px;">Vitality Blueprint: Risks Q1 2026</div>
+
+    <div class="risks-grid">
+      <!-- Past -->
+      <div class="risk-col">
+        <h4>Past: Q1 2026</h4>
+
+        <div class="risk-card">
+          <h5>
+            &#9888;&#65039; Potential reduction of the team driven by client-side budget constraints
+            <span class="badge badge-happened">Happened</span>
+          </h5>
+          <div class="meta"><span class="prob">Probability: High</span> &nbsp;|&nbsp; <span class="impact">Impact: High</span></div>
+        </div>
+
+        <div class="risk-card">
+          <h5>
+            &#9888;&#65039; Reduced team velocity due to BE developer
+            <span class="badge badge-happened">Happened</span>
+          </h5>
+          <div class="meta"><span class="prob">Probability: Medium</span> &nbsp;|&nbsp; <span class="impact">Impact: Medium</span></div>
+          <div class="mitigation">Not due to paternity leave as predicted — caused by consistent low performance.</div>
+        </div>
+
+        <div class="risk-card">
+          <h5>
+            &#9888;&#65039; Premature start of software team's work on v3.0
+            <span class="badge badge-mitigated">Mitigated</span>
+          </h5>
+          <div class="meta"><span class="prob">Probability: Medium</span> &nbsp;|&nbsp; <span class="impact">Impact: Medium</span></div>
+        </div>
+      </div>
+
+      <!-- Future -->
+      <div class="risk-col">
+        <h4>Future: Q2 2026</h4>
+
+        <div class="risk-card future-risk">
+          <h5>&#9888;&#65039; Increased bug risk with only 1 QA intern remaining</h5>
+          <div class="meta"><span class="prob">Probability: High</span> &nbsp;|&nbsp; <span class="impact">Impact: High</span></div>
+          <div class="mitigation">Combined with vibe-coding, this may have a cumulative effect. Mitigation: require developers to perform more thorough testing themselves if budget remains constrained.</div>
+        </div>
+
+        <div class="risk-card future-risk">
+          <h5>&#9888;&#65039; Increased customer support requests about platform issues</h5>
+          <div class="meta"><span class="prob">Probability: High</span> &nbsp;|&nbsp; <span class="impact">Impact: Medium</span></div>
+          <div class="mitigation">Greater influx of reports about incorrect platform behavior expected as QA coverage decreases.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 7 — Closing ═══ -->
+  <div class="slide slide-hero" data-slide="6">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:32px;">
+      <div class="logo" style="margin-bottom:0;">&#128640;</div>
+      <span style="font-size:2rem; color:#a78bfa;">&#9825;</span>
+    </div>
+    <div class="slide-title" style="font-size:3.2rem; line-height:1.25;">Shaping a better product,<br>together</div>
+    <div class="slide-subtitle" style="color:rgba(255,255,255,0.5); font-size:1.3rem; font-weight:400; margin-top:12px; margin-bottom:20px;">Vitality Blueprint Q1 2026</div>
+    <div style="width:80px; height:3px; background: linear-gradient(90deg, #a78bfa, #7c3aed); border-radius:2px;"></div>
+  </div>
+
+</div>
+
+<!-- ── Navigation ── -->
+<div class="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">&#8250;</button>
+  <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen">&#x26F6;</button>
+</div>
+<div class="slide-counter" id="counter"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsContainer.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+    counter.textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  function changeSlide(dir) {
+    let next = current + dir;
+    if (next < 0) next = slides.length - 1;
+    if (next >= slides.length) next = 0;
+    goTo(next);
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+    if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+  });
+
+  // Init counter
+  counter.textContent = `1 / ${slides.length}`;
+</script>
+</body>
+</html>
