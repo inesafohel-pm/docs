@@ -43,6 +43,33 @@
     pointer-events: auto;
   }
 
+  /* ── Animations ── */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .slide .anim {
+    opacity: 0;
+  }
+  .slide.active .anim.animate {
+    animation: fadeSlideUp 0.5s ease-out forwards;
+  }
+  .slide.active .anim.animate-scale {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+  .slide.active .anim.animate-fade {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
   /* ── LABS watermark ── */
   .slide::before {
     content: 'LABS';
@@ -310,29 +337,29 @@
 
   <!-- ═══ SLIDE 1 — Title ═══ -->
   <div class="slide slide-hero active" data-slide="0">
-    <div class="logo">&#128640;</div>
-    <div class="slide-title">VITALITY BLUEPRINT</div>
-    <div class="slide-subtitle">Quarterly Project Review — Q1</div>
-    <div class="year">2026</div>
+    <div class="logo anim" data-delay="0">&#128640;</div>
+    <div class="slide-title anim" data-delay="150">VITALITY BLUEPRINT</div>
+    <div class="slide-subtitle anim" data-delay="300">Quarterly Project Review — Q1</div>
+    <div class="year anim" data-delay="400">2026</div>
   </div>
 
   <!-- ═══ SLIDE 2 — Q1 Highlights ═══ -->
   <div class="slide" data-slide="1">
     <span class="year-badge">2026</span>
-    <div class="slide-title">Q1 Highlights</div>
-    <div class="slide-subtitle" style="margin-bottom:40px;"></div>
+    <div class="slide-title anim" data-delay="0">Q1 Highlights</div>
+    <div class="slide-subtitle anim" data-delay="100" style="margin-bottom:40px;"></div>
     <div class="cards">
-      <div class="card">
+      <div class="card anim" data-delay="200">
         <div class="card-icon">&#129302;</div>
         <h3>AI Everywhere</h3>
         <p>Broad adoption of AI across development, QA, design, and project management workflows.</p>
       </div>
-      <div class="card">
+      <div class="card anim" data-delay="300">
         <div class="card-icon">&#128736;</div>
         <h3>New Features & Platform v3.0</h3>
         <p>Launched Super Admin and Wearables features. Kicked off development of the new platform version.</p>
       </div>
-      <div class="card">
+      <div class="card anim" data-delay="400">
         <div class="card-icon">&#128101;</div>
         <h3>Significant Team Changes</h3>
         <p>New strategic course of action led to significant changes in team composition and project direction.</p>
@@ -343,20 +370,20 @@
   <!-- ═══ SLIDE 3 — Super Admin ═══ -->
   <div class="slide" data-slide="2">
     <span class="year-badge">2026</span>
-    <div class="slide-title">Super Admin</div>
-    <div class="slide-subtitle" style="margin-bottom:40px;">New B2B Management Layer</div>
+    <div class="slide-title anim" data-delay="0">Super Admin</div>
+    <div class="slide-subtitle anim" data-delay="100" style="margin-bottom:40px;">New B2B Management Layer</div>
     <div class="cards">
-      <div class="card" style="flex:1 1 280px;">
+      <div class="card anim" style="flex:1 1 280px;" data-delay="200">
         <div class="card-icon">&#128272;</div>
         <h3>Organization Accounts</h3>
         <p>Multi-coach organizations with Super Admin roles and tiered subscriptions (Individual, Organization, Enterprise).</p>
       </div>
-      <div class="card" style="flex:1 1 280px;">
+      <div class="card anim" style="flex:1 1 280px;" data-delay="300">
         <div class="card-icon">&#128101;</div>
         <h3>Coach Management</h3>
         <p>Invite, promote, demote, and remove coaches. Admin hierarchy with permission controls.</p>
       </div>
-      <div class="card" style="flex:1 1 280px;">
+      <div class="card anim" style="flex:1 1 280px;" data-delay="400">
         <div class="card-icon">&#128260;</div>
         <h3>Client Reassignment</h3>
         <p>Bulk reassign clients between coaches within the organization dashboard.</p>
@@ -367,13 +394,13 @@
   <!-- ═══ SLIDE 4 — Wearables ═══ -->
   <div class="slide" data-slide="3">
     <span class="year-badge">2026</span>
-    <div class="slide-title">Wearables Integration</div>
-    <div class="slide-subtitle" style="margin-bottom:72px;">Connected wearable devices to the platform, enabling health data syncing and expanded biomarker tracking.</div>
+    <div class="slide-title anim" data-delay="0">Wearables Integration</div>
+    <div class="slide-subtitle anim" data-delay="100" style="margin-bottom:72px;">Connected wearable devices to the platform, enabling health data syncing and expanded biomarker tracking.</div>
     <div style="display:flex; gap:16px; align-items:flex-start; justify-content:center; max-height:58vh;">
-      <div style="flex:0 0 45%; max-width:50%; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); box-shadow:0 8px 32px rgba(0,0,0,0.3);">
+      <div class="anim" data-delay="250" style="flex:0 0 45%; max-width:50%; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); box-shadow:0 8px 32px rgba(0,0,0,0.3);">
         <img src="wearables-integrations.png" alt="Wearables Integrations" style="width:100%; height:100%; object-fit:cover; display:block;">
       </div>
-      <div style="flex:0 0 45%; max-width:50%; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); box-shadow:0 8px 32px rgba(0,0,0,0.3);">
+      <div class="anim" data-delay="400" style="flex:0 0 45%; max-width:50%; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); box-shadow:0 8px 32px rgba(0,0,0,0.3);">
         <img src="wearables-metrics.png" alt="Wearables Metrics Dashboard" style="width:100%; height:100%; object-fit:cover; display:block;">
       </div>
     </div>
@@ -382,24 +409,24 @@
   <!-- ═══ SLIDE 5 — v3.0 & New Course of Action ═══ -->
   <div class="slide" data-slide="4">
     <span class="year-badge">2026</span>
-    <div class="slide-title">3.0 and... New Course of Action</div>
-    <div class="slide-subtitle" style="margin-bottom:36px;"></div>
+    <div class="slide-title anim" data-delay="0">3.0 and... New Course of Action</div>
+    <div class="slide-subtitle anim" data-delay="100" style="margin-bottom:36px;"></div>
     <div class="numbered-list">
-      <div class="numbered-item">
+      <div class="numbered-item anim" data-delay="200">
         <div class="num">1</div>
         <div>
           <h3>Gradual Team Reduction</h3>
           <p>QA, 1 BE, 2 FE, and PM moved off the project. VB is shifting focus to marketing and increasing sales before scaling the team back up with new features.</p>
         </div>
       </div>
-      <div class="numbered-item">
+      <div class="numbered-item anim" data-delay="350">
         <div class="num">2</div>
         <div>
           <h3>International Team Expansion</h3>
           <p>Added a new full-stack developer based in the US with extensive Claude AI expertise — sharing knowledge and best practices with the team.</p>
         </div>
       </div>
-      <div class="numbered-item">
+      <div class="numbered-item anim" data-delay="500">
         <div class="num">3</div>
         <div>
           <h3>AI Adoption Across All Functions</h3>
@@ -412,15 +439,15 @@
   <!-- ═══ SLIDE 6 — Risks ═══ -->
   <div class="slide" data-slide="5">
     <span class="year-badge">2026</span>
-    <div class="slide-title" style="font-size:2.6rem;">Project Risks</div>
-    <div class="slide-subtitle" style="margin-bottom: 24px;">Vitality Blueprint: Risks Q1 2026</div>
+    <div class="slide-title anim" data-delay="0" style="font-size:2.6rem;">Project Risks</div>
+    <div class="slide-subtitle anim" data-delay="100" style="margin-bottom: 24px;">Vitality Blueprint: Risks Q1 2026</div>
 
     <div class="risks-grid">
       <!-- Past -->
       <div class="risk-col">
-        <h4>Past: Q1 2026</h4>
+        <h4 class="anim" data-delay="200">Past: Q1 2026</h4>
 
-        <div class="risk-card">
+        <div class="risk-card anim" data-delay="300">
           <h5>
             &#9888;&#65039; Potential reduction of the team driven by client-side budget constraints
             <span class="badge badge-happened">Occurred</span>
@@ -428,7 +455,7 @@
           <div class="meta"><span class="prob">Probability: High</span> &nbsp;|&nbsp; <span class="impact">Impact: High</span></div>
         </div>
 
-        <div class="risk-card">
+        <div class="risk-card anim" data-delay="420">
           <h5>
             &#9888;&#65039; Reduced team velocity due to BE developer
             <span class="badge badge-happened">Occurred</span>
@@ -437,7 +464,7 @@
           <div class="mitigation">Not due to paternity leave as predicted — caused by consistent low performance.</div>
         </div>
 
-        <div class="risk-card">
+        <div class="risk-card anim" data-delay="540">
           <h5>
             &#9888;&#65039; Premature start of software team's work on v3.0
             <span class="badge badge-mitigated">Mitigated</span>
@@ -448,15 +475,15 @@
 
       <!-- Future -->
       <div class="risk-col">
-        <h4>Future: Q2 2026</h4>
+        <h4 class="anim" data-delay="200">Future: Q2 2026</h4>
 
-        <div class="risk-card future-risk">
+        <div class="risk-card future-risk anim" data-delay="660">
           <h5>&#9888;&#65039; Increased bug risk with only 1 QA intern remaining</h5>
           <div class="meta"><span class="prob">Probability: High</span> &nbsp;|&nbsp; <span class="impact">Impact: High</span></div>
           <div class="mitigation">Combined with vibe-coding, this may have a cumulative effect. Mitigation: require developers to perform more thorough testing themselves if budget remains constrained.</div>
         </div>
 
-        <div class="risk-card future-risk">
+        <div class="risk-card future-risk anim" data-delay="780">
           <h5>&#9888;&#65039; Increased customer support requests about platform issues</h5>
           <div class="meta"><span class="prob">Probability: High</span> &nbsp;|&nbsp; <span class="impact">Impact: Medium</span></div>
           <div class="mitigation">Greater influx of reports about incorrect platform behavior expected as QA coverage decreases.</div>
@@ -468,21 +495,21 @@
   <!-- ═══ SLIDE 7 — Q2 Goal ═══ -->
   <div class="slide goal-slide" data-slide="6">
     <span class="year-badge">2026</span>
-    <div class="goal-icon">&#127919;</div>
-    <div class="slide-title">Q2 Goal</div>
-    <div class="slide-subtitle" style="font-size:1.8rem; color: #a78bfa; margin-bottom: 20px;">Increase Sales & Revenue</div>
-    <div class="goal-desc">Focus shifts from feature development to growth — marketing push, sales enablement, and platform stability to support customer acquisition.</div>
+    <div class="goal-icon anim" data-delay="0" data-anim="scale">&#127919;</div>
+    <div class="slide-title anim" data-delay="150">Q2 Goal</div>
+    <div class="slide-subtitle anim" data-delay="300" style="font-size:1.8rem; color: #a78bfa; margin-bottom: 20px;">Increase Sales & Revenue</div>
+    <div class="goal-desc anim" data-delay="450">Focus shifts from feature development to growth — marketing push, sales enablement, and platform stability to support customer acquisition.</div>
   </div>
 
   <!-- ═══ SLIDE 8 — Closing ═══ -->
   <div class="slide slide-hero" data-slide="7">
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:32px;">
+    <div class="anim" data-delay="0" data-anim="scale" style="display:flex; align-items:center; gap:12px; margin-bottom:32px;">
       <div class="logo" style="margin-bottom:0;">&#128640;</div>
       <span style="font-size:2rem; color:#a78bfa;">&#9825;</span>
     </div>
-    <div class="slide-title" style="font-size:3.2rem; line-height:1.25;">Shaping a better product,<br>together</div>
-    <div class="slide-subtitle" style="color:rgba(255,255,255,0.5); font-size:1.3rem; font-weight:400; margin-top:12px; margin-bottom:20px;">Vitality Blueprint Q1 2026</div>
-    <div style="width:80px; height:3px; background: linear-gradient(90deg, #a78bfa, #7c3aed); border-radius:2px;"></div>
+    <div class="slide-title anim" data-delay="200" style="font-size:3.2rem; line-height:1.25;">Shaping a better product,<br>together</div>
+    <div class="slide-subtitle anim" data-delay="350" style="color:rgba(255,255,255,0.5); font-size:1.3rem; font-weight:400; margin-top:12px; margin-bottom:20px;">Vitality Blueprint Q1 2026</div>
+    <div class="anim" data-delay="500" data-anim="fade" style="width:80px; height:3px; background: linear-gradient(90deg, #a78bfa, #7c3aed); border-radius:2px;"></div>
   </div>
 
 </div>
@@ -510,13 +537,33 @@
     dotsContainer.appendChild(d);
   });
 
+  function resetAnims(slide) {
+    slide.querySelectorAll('.anim').forEach(el => {
+      el.classList.remove('animate', 'animate-scale', 'animate-fade');
+      el.style.animationDelay = '';
+    });
+  }
+
+  function triggerAnims(slide) {
+    slide.querySelectorAll('.anim').forEach(el => {
+      const delay = el.dataset.delay || '0';
+      const type = el.dataset.anim || 'up';
+      el.style.animationDelay = delay + 'ms';
+      if (type === 'scale') el.classList.add('animate-scale');
+      else if (type === 'fade') el.classList.add('animate-fade');
+      else el.classList.add('animate');
+    });
+  }
+
   function goTo(n) {
+    resetAnims(slides[current]);
     slides[current].classList.remove('active');
     dotsContainer.children[current].classList.remove('active');
     current = n;
     slides[current].classList.add('active');
     dotsContainer.children[current].classList.add('active');
     counter.textContent = `${current + 1} / ${slides.length}`;
+    triggerAnims(slides[current]);
   }
 
   function changeSlide(dir) {
@@ -541,8 +588,9 @@
     if (e.key === 'f' || e.key === 'F') toggleFullscreen();
   });
 
-  // Init counter
+  // Init counter + first slide animations
   counter.textContent = `1 / ${slides.length}`;
+  triggerAnims(slides[0]);
 </script>
 </body>
 </html>
